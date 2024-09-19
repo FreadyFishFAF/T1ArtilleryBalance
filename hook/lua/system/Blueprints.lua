@@ -75,7 +75,7 @@ do
 
                     bp.Weapon[1].BallisticArc = 'RULEUBA_LowArc'
 
-                    bp.Weapon[1].MuzzleVelocity = bp.Weapon[1].MuzzleVelocity * 2
+                    -- bp.Weapon[1].MuzzleVelocity = bp.Weapon[1].MuzzleVelocity
                 end
             end
         end
