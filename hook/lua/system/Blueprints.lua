@@ -1,4 +1,4 @@
--- Subtract 1125 after hooked, for debugging
+-- Subtract 1123 after hooked, for debugging
 do
     local oldModBlueprints = ModBlueprints
 
@@ -7,18 +7,21 @@ do
 
         -- Loop through all blueprints to find T1 artillery units
         for id, bp in all_bps.Unit do
-            -- Check if the unit is categorized as T1 artillery
-            if table.find(bp.Categories, "ARTILLERY") and table.find(bp.Categories, "TECH1") then
 
-                -- Disable predictive projectiles to make them ineffective against moving targets
-                bp.Weapon[1].LeadTarget = false
+            -- Check if the unit is any of our T1 Artillery so we can do the changes that will apply to all of them first
+            if id == "uel0103" or id == "url0103" or id == "ual0103" or id == "xsl0103" then
 
-                -- Double the cost
-                bp.Economy.BuildCostEnergy = bp.Economy.BuildCostEnergy * 2
-                bp.Economy.BuildCostMass = bp.Economy.BuildCostMass * 2
+                local buildCostAndTime = 2
+
+                bp.Economy.BuildCostEnergy = bp.Economy.BuildCostEnergy * buildCostAndTime
+                bp.Economy.BuildCostMass = bp.Economy.BuildCostMass * buildCostAndTime
+                bp.Economy.BuildTime = bp.Economy.BuildTime * buildCostAndTime
 
                 -- Increase weapon range by 2 units
                 bp.Weapon[1].MaxRadius = bp.Weapon[1].MaxRadius + 2
+
+                -- Disable predictive projectiles to make them ineffective against moving targets
+                bp.Weapon[1].LeadTarget = false
 
                 if id == "uel0103" then -- UEF T1 Artillery
 
@@ -74,8 +77,6 @@ do
                     bp.Weapon[1].Damage = bp.Weapon[1].Damage * seraDPS / seraRoF
 
                     bp.Weapon[1].BallisticArc = 'RULEUBA_LowArc'
-
-                    -- bp.Weapon[1].MuzzleVelocity = bp.Weapon[1].MuzzleVelocity
                 end
             end
         end
